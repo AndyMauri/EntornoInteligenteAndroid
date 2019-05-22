@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Import" />
+        <item
+            android:id="@+id/Usuario"
+            android:icon="@drawable/settings"
+            android:title="Usuarios" />
+        <item
+            android:id="@+id/componentes"
+            android:icon="@drawable/componentes"
+            android:title="Componetes" />
+        <item
+            android:id="@+id/control"
+            android:icon="@drawable/switch1"
+            android:title="Control" />
+        <item
+            android:id="@+id/simulador"
+            android:icon="@drawable/presentation"
+            android:title="Simulador" />
+    </group>
+
+    <item android:title="Información">
+        <menu>
+            <item
+                android:id="@+id/informacion"
+                android:icon="@drawable/information"
+                android:title="Información del proyecto" />
+        </menu>
+    </item>
+
+</menu>
