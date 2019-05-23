@@ -41,9 +41,10 @@ public class UsuarioFragment extends Fragment {
     // TODO: Rename and change types of parameters
     public static String Ip="192.168.0.3:800";
     private String mParam1;
-    private String mParam2, response, Rol;
+    private String mParam2, response;
     private ImageView Insertar, Consultar, Actualizar, Eliminar;
     EditText nombre, apellido, id, telefono, email, contrasena;
+    int Rol;
     JSONArray Roles;
     Spinner spinner;
     View view;
@@ -97,6 +98,7 @@ public class UsuarioFragment extends Fragment {
 
                 try {
                     Roles = new JSONArray(response);
+
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -105,15 +107,11 @@ public class UsuarioFragment extends Fragment {
             }
         }).start();
 
-
-
         Insertar = view.findViewById(R.id.Insertar);
         Insertar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 showDialog();
-
             }
         });
 
@@ -129,16 +127,16 @@ public class UsuarioFragment extends Fragment {
        View dialogoView = inflater.inflate(R.layout.registrarusuario, null);
        dialogBuilder.setView(dialogoView);
 
-        spinner = dialogoView.findViewById(R.id.spinner);
+       spinner = dialogoView.findViewById(R.id.spinner);
 
-        final ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this.getContext(), R.array.combo, android.R.layout.simple_spinner_item);
-
-        spinner.setAdapter(adapter);
+       final ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this.getContext(), R.array.combo, android.R.layout.simple_spinner_item);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(parent.getContext(),"Seleccionado"+parent.getItemAtPosition(position).toString(),Toast.LENGTH_LONG).show();
+
+                Rol=position-1;
             }
 
             @Override
@@ -146,16 +144,37 @@ public class UsuarioFragment extends Fragment {
 
             }
         });
+        spinner.setAdapter(adapter);
 
        nombre = dialogoView.findViewById(R.id.Nombre);
        apellido = dialogoView.findViewById(R.id.Apellido);
+       id = dialogoView.findViewById(R.id.Id);
+       telefono = dialogoView.findViewById(R.id.Telefono);
+       email = dialogoView.findViewById(R.id.email);
+       contrasena = dialogoView.findViewById(R.id.Contrasena);
 
        dialogBuilder.setCancelable(false).setPositiveButton("REGISTRAR", new DialogInterface.OnClickListener() {
            @Override
            public void onClick(DialogInterface dialog, int which) {
+               new Thread(new Runnable() {
 
-               nombre.getText().toString();
-               apellido.getText().toString();
+                   @Override
+                   public void run() {
+
+                       response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Servicio_Insert.php?nombre="+nombre.getText().toString()
+                               +"&apellido="+apellido.getText().toString()
+                               +"&id="+id.getText().toString()
+                               +"&telefono="+telefono.getText().toString()
+                               +"&email="+email.getText().toString()
+                               +"&contrasena="+contrasena.getText().toString()
+                               +"&idrol="+Rol
+                       ).body();
+
+                       System.out.println("Response was: " + response);
+                       //Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
+
+                   }
+               }).start();
            }
        }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
            @Override
