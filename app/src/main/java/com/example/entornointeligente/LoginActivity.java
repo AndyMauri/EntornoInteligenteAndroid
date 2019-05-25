@@ -165,7 +165,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        LayoutInflater inflater = this.getLayoutInflater();
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
         View vista = inflater.inflate(R.layout.nav_header_principal, null);
         final TextView nom = vista.findViewById(R.id.nombre1);
         final TextView correo = vista.findViewById(R.id.correo1);

@@ -55,6 +55,13 @@ public class UsuarioFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public class ListAdapter extends ArrayAdapter<String>{
+
+        public ListAdapter(Context context, int resource, String[] items_List) {
+            super(context, resource, items_List);
+        }
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
