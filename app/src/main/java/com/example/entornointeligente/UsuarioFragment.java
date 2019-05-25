@@ -39,7 +39,7 @@ public class UsuarioFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    public static String Ip="192.168.0.3:800";
+    public static String Ip="192.168.0.2:800";
     private String mParam1;
     private String mParam2, response;
     private ImageView Insertar, Consultar, Actualizar, Eliminar;
@@ -136,7 +136,7 @@ public class UsuarioFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(parent.getContext(),"Seleccionado"+parent.getItemAtPosition(position).toString(),Toast.LENGTH_LONG).show();
 
-                Rol=position-1;
+                Rol=position;
             }
 
             @Override
@@ -161,7 +161,7 @@ public class UsuarioFragment extends Fragment {
                    @Override
                    public void run() {
 
-                       response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Servicio_Insert.php?nombre="+nombre.getText().toString()
+                       response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Insert.php?nombre="+nombre.getText().toString()
                                +"&apellido="+apellido.getText().toString()
                                +"&id="+id.getText().toString()
                                +"&telefono="+telefono.getText().toString()
@@ -170,7 +170,7 @@ public class UsuarioFragment extends Fragment {
                                +"&idrol="+Rol
                        ).body();
 
-                       System.out.println("Response was: " + response);
+                       System.out.println("Response was: " + response + "Rol"+Rol);
                        //Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
 
                    }

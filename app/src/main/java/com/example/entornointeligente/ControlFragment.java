@@ -41,7 +41,7 @@ public class ControlFragment extends Fragment {
     private ImageView Bombillo, Puerta, Ventana;
     private GifImageView Ventilador;
     private Switch Switch_Bom, Switch_Ventilador, Switch_Puerta, Switch_Ventana;
-    static String Ip="192.168.0.3:800";
+    static String Ip="192.168.0.2:800";
     private int Idcomp;
     private int Idestados;
     private int Idcomp1;
@@ -88,7 +88,7 @@ public class ControlFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Select.php").body();
+                response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Select.php").body();
                 System.out.println("Response was: " + response);
 
                 try {
@@ -146,7 +146,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Update.php?Idcomp="+Idcomp+"&Idestado=1").body();
+                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp+"&Idestado=1").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
@@ -156,7 +156,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Update.php?Idcomp="+Idcomp+"&Idestado=0").body();
+                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp+"&Idestado=0").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
@@ -194,7 +194,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Update.php?Idcomp="+Idcomp1+"&Idestado=1").body();
+                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp1+"&Idestado=1").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
@@ -205,7 +205,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Update.php?Idcomp="+Idcomp1+"&Idestado=0").body();
+                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp1+"&Idestado=0").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
@@ -241,7 +241,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Update.php?Idcomp="+Idcomp2+"&Idestado=3").body();
+                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp2+"&Idestado=3").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
@@ -252,7 +252,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Update.php?Idcomp="+Idcomp2+"&Idestado=2").body();
+                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp2+"&Idestado=2").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
@@ -288,7 +288,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Update.php?Idcomp="+Idcomp3+"&Idestado=3").body();
+                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp3+"&Idestado=3").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
@@ -298,7 +298,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Update.php?Idcomp="+Idcomp3+"&Idestado=2").body();
+                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp3+"&Idestado=2").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
