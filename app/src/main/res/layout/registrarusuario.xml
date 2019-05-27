@@ -15,7 +15,6 @@
             android:visibility="gone" />-->
 
         <ScrollView
-            android:id="@+id/login_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -33,11 +32,12 @@
                     android:weightSum="10">
 
                     <TextView
+                        android:id="@+id/Titulo"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="10"
                         android:gravity="center"
-                        android:text="REGISTRO DE USUARIO"
+                        android:text="REGISTRAR USUARIO"
                         android:textColor="@color/colorPrimary"
                         android:textSize="28dp" />
 
@@ -165,7 +165,27 @@
 
                 </LinearLayout>
 
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/IdUsuario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Didite el ID del usuario a modificar"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:visibility="gone"/>
+
+                </android.support.design.widget.TextInputLayout>
+
             </LinearLayout>
+
         </ScrollView>
 
 

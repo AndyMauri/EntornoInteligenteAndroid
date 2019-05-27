@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             };
         }
     };*/
-    public static String Ip="192.168.0.2:800", E, C;
+    public static String Ip="192.168.0.4:800", E, C;
 
     private static final ThreadLocal<String[]> DUMMY_CREDENTIALS = new ThreadLocal<String[]>() {
         @Override
