@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +21,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.sql.Array;
+import java.util.ArrayList;
 
 
 /**
@@ -39,14 +39,18 @@ public class UsuarioFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    public static String Ip="192.168.0.4:800";
+    public static String Ip="192.168.0.5:800";
     private String mParam1;
     private String mParam2, response=null;
     private ImageView Insertar, Consultar, Actualizar, Eliminar;
     EditText nombre, apellido, id, telefono, email, contrasena, IdUsuario;
     TextView Titulo;
-    int Rol;
+    int Rol, i;
+    boolean resp=false;
     JSONArray Roles;
+    ListView listId;
+    ArrayList<String> arrayListId, arrayListNombre, arrayListApellido, arrayListTelefono, arrayListEmail, arrayListContrasena, arrayListIdRol;
+    ArrayAdapter adapterId, adapterNombre, adapterApellido, adapterTelefono, adapterEmail, adapterContrasena, adapterIdRol;
     Spinner spinner;
     View view;
 
@@ -56,12 +60,41 @@ public class UsuarioFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public class ListAdapter extends ArrayAdapter<String>{
-
-        public ListAdapter(Context context, int resource, String[] items_List) {
-            super(context, resource, items_List);
-        }
+    public void listadapterId(){
+        adapterId = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListId);
+        listId.setAdapter(adapterId);
     }
+
+    public void listadapterNombre(){
+        adapterNombre = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListNombre);
+        listId.setAdapter(adapterNombre);
+    }
+
+    public void listadapterApellido(){
+        adapterApellido = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListApellido);
+        listId.setAdapter(adapterApellido);
+    }
+
+    public void listadapterTelefono(){
+        adapterTelefono = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListTelefono);
+        listId.setAdapter(adapterTelefono);
+    }
+
+    public void listadapterEmail(){
+        adapterEmail = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListEmail);
+        listId.setAdapter(adapterEmail);
+    }
+
+    public void listadapterContrasena(){
+        adapterContrasena= new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListContrasena);
+        listId.setAdapter(adapterContrasena);
+    }
+
+    public void listadapterIdRol(){
+        adapterIdRol = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListIdRol);
+        listId.setAdapter(adapterIdRol);
+    }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -231,25 +264,179 @@ public class UsuarioFragment extends Fragment {
         View dialogoView = inflater.inflate(R.layout.consultarusuario, null);
         dialogBuilder.setView(dialogoView);
 
-        dialogBuilder.setCancelable(false).setPositiveButton("REGISTRAR", new DialogInterface.OnClickListener() {
+        listId = dialogoView.findViewById(R.id.listId);
+
+        new Thread(new Runnable() {
+
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                new Thread(new Runnable() {
+            public void run() {
 
-                    @Override
-                    public void run() {
+                response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Select.php").body();
+                System.out.println("Response was: " + response);
 
-                        response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Select.php"
-                        ).body();
+                try {
+                    final JSONArray obj = new JSONArray(response);
 
-                        System.out.println("Response was: " + response);
+                    arrayListId =new ArrayList<>();
 
+                    for (i = 0; i < obj.length(); i++) {
+                        arrayListId.add(obj.getJSONArray(i).getString(0));
+                        arrayListNombre.add(obj.getJSONArray(i).getString(1));
+                        arrayListApellido.add(obj.getJSONArray(i).getString(2));
+                        arrayListTelefono.add(obj.getJSONArray(i).getString(3));
+                        arrayListContrasena.add(obj.getJSONArray(i).getString(4));
+                        arrayListEmail.add(obj.getJSONArray(i).getString(5));
+                        arrayListIdRol.add(obj.getJSONArray(i).getString(6));
+                        System.out.println("Response was: " + arrayListId+" --- "+arrayListNombre+" --- "+arrayListApellido+" --- "+ arrayListTelefono+" --- "+arrayListContrasena+" --- "+arrayListEmail+" --- "+arrayListIdRol);
                     }
-                }).start();
 
-                Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
+
+                    new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            listadapterId();
+
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            if ( i == obj.length()) {
+                                Thread.interrupted();
+                                resp = true;
+                            }
+                        }
+                    }).start();
+
+                    new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            listadapterNombre();
+                            try {
+                                Thread.sleep(600);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (resp == true) {
+                                Thread.interrupted();
+                                resp = true;
+                            }
+
+                        }
+                    }).start();
+
+                    new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            listadapterApellido();
+                            try {
+                                Thread.sleep(700);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (resp == true) {
+                                Thread.interrupted();
+                                resp = true;
+                            }
+
+                        }
+                    }).start();
+
+                    new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            listadapterTelefono();
+                            try {
+                                Thread.sleep(800);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (resp == true) {
+                                Thread.interrupted();
+                                resp = true;
+                            }
+                        }
+                    }).start();
+
+                    new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            listadapterEmail();
+                            try {
+                                Thread.sleep(900);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (resp == true) {
+                                Thread.interrupted();
+                                resp = true;
+                            }
+                        }
+                    }).start();
+
+                    new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            listadapterContrasena();
+                            try {
+                                Thread.sleep(950);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (resp == true) {
+                                Thread.interrupted();
+                                resp = true;
+                            }
+
+                        }
+                    }).start();
+
+                    new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            listadapterIdRol();
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
             }
-        }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+        }).start();
+
+        /*new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+
+
+
+            }
+        }).start();*/
+
+
+        dialogBuilder.setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

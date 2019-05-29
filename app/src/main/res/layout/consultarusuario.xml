@@ -27,44 +27,62 @@
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:id="@+id/txmodel"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/ColumId"
+                            android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             android:layout_column="0"
                             android:layout_span="2"
+                            android:background="#c0c0c0"
                             android:padding="10dp"
-                            android:text="@string/app_name"
-                            android:background="#c0c0c0"/>
+                            android:text="Identificaciòn" />
 
                         <TextView
-                            android:id="@+id/txtprice1"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/ColumNomb"
+                            android:layout_width="214dp"
                             android:layout_height="wrap_content"
                             android:layout_column="1"
+                            android:background="#c0c0c0"
                             android:padding="10dp"
-                            android:text="@string/app_name"
-                            android:background="#c0c0c0"/>
+                            android:text="Nombre de Usuario" />
 
                         <TextView
-                            android:id="@+id/txtprice2"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/ColumApe"
+                            android:layout_width="199dp"
                             android:layout_height="wrap_content"
                             android:layout_column="1"
+                            android:background="#c0c0c0"
                             android:padding="10dp"
-                            android:text="@string/app_name"
-                            android:background="#c0c0c0"/>
+                            android:text="Apellido                            " />
 
                         <TextView
-                            android:id="@+id/txtprice3"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/ColumTelef"
+                            android:layout_width="236dp"
                             android:layout_height="wrap_content"
                             android:layout_column="1"
+                            android:background="#c0c0c0"
                             android:padding="10dp"
-                            android:text="@string/app_name"
-                            android:background="#c0c0c0"/>
+                            android:text="Telefono                         " />
 
                         <TextView
-                            android:id="@+id/txtprice4"
+                            android:id="@+id/ColumEmail"
+                            android:layout_width="281dp"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:background="#c0c0c0"
+                            android:padding="10dp"
+                            android:text="@string/app_name" />
+
+                        <TextView
+                            android:id="@+id/ColumContras"
+                            android:layout_width="185dp"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:background="#c0c0c0"
+                            android:padding="10dp"
+                            android:text="@string/app_name" />
+
+                        <TextView
+                            android:id="@+id/ColumRol"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_column="1"
@@ -72,27 +90,48 @@
                             android:text="@string/app_name"
                             android:background="#c0c0c0" />
 
-                    </TableRow>
+
 
                     <TableRow android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                        <ListView android:layout_width="141dp"
-                            android:layout_height="wrap_content"/>
+                        <ListView
+                            android:id="@+id/listId"
+                            android:layout_width="199dp"
+                            android:layout_height="wrap_content" />
 
-                        <ListView android:layout_width="142dp"
-                            android:layout_height="wrap_content"/>
+                        <ListView
+                            android:id="@+id/listNombre"
+                            android:layout_width="215dp"
+                            android:layout_height="wrap_content" />
 
-                        <ListView android:layout_width="141dp"
-                            android:layout_height="wrap_content"/>
+                        <ListView
+                            android:id="@+id/listApellido"
+                            android:layout_width="199dp"
+                            android:layout_height="wrap_content" />
 
-                        <ListView android:layout_width="141dp"
-                            android:layout_height="wrap_content"/>
+                        <ListView
+                            android:id="@+id/listTelefono"
+                            android:layout_width="236dp"
+                            android:layout_height="wrap_content" />
 
-                        <ListView android:layout_width="141dp"
+                        <ListView
+                            android:id="@+id/listEmail"
+                            android:layout_width="281dp"
+                            android:layout_height="wrap_content" />
+
+                        <ListView
+                            android:id="@+id/listContrasena"
+                            android:layout_width="185dp"
+                            android:layout_height="wrap_content" />
+
+                        <ListView android:id="@+id/listIdRol"
+                            android:layout_width="141dp"
                             android:layout_height="wrap_content"/>
 
                     </TableRow>
+
+                </TableRow>
 
                 </LinearLayout>
 
