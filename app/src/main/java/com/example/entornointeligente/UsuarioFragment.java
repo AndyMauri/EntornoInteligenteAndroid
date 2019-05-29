@@ -39,11 +39,12 @@ public class UsuarioFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    public static String Ip="192.168.0.2:800";
+    public static String Ip="192.168.0.4:800";
     private String mParam1;
-    private String mParam2, response;
+    private String mParam2, response=null;
     private ImageView Insertar, Consultar, Actualizar, Eliminar;
-    EditText nombre, apellido, id, telefono, email, contrasena;
+    EditText nombre, apellido, id, telefono, email, contrasena, IdUsuario;
+    TextView Titulo;
     int Rol;
     JSONArray Roles;
     Spinner spinner;
@@ -94,7 +95,7 @@ public class UsuarioFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_usuario, container, false);
 
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
 
             @Override
             public void run() {
@@ -112,20 +113,45 @@ public class UsuarioFragment extends Fragment {
                 }
 
             }
-        }).start();
+        }).start();*/
 
         Insertar = view.findViewById(R.id.Insertar);
         Insertar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog();
+                Insertar();
+            }
+        });
+
+        Consultar = view.findViewById(R.id.Consultar);
+        Consultar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Consultar();
+            }
+        });
+
+        Actualizar = view.findViewById(R.id.Actualizar);
+        Actualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Actualizar();
+            }
+        });
+
+        Eliminar = view.findViewById(R.id.Eliminar);
+        Eliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Eliminar();
+                Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
             }
         });
 
         return view;
     }
 
-    protected void showDialog(){
+    protected void Insertar(){
 
        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
 
@@ -138,7 +164,7 @@ public class UsuarioFragment extends Fragment {
 
        final ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this.getContext(), R.array.combo, android.R.layout.simple_spinner_item);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(parent.getContext(),"Seleccionado"+parent.getItemAtPosition(position).toString(),Toast.LENGTH_LONG).show();
@@ -177,11 +203,12 @@ public class UsuarioFragment extends Fragment {
                                +"&idrol="+Rol
                        ).body();
 
-                       System.out.println("Response was: " + response + "Rol"+Rol);
-                       //Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
+                       System.out.println("Response was: " + response);
 
                    }
                }).start();
+
+               Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
            }
        }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
            @Override
@@ -192,6 +219,163 @@ public class UsuarioFragment extends Fragment {
 
        AlertDialog alertDialog = dialogBuilder.create();
        alertDialog.show();
+    }
+
+
+    protected void Consultar(){
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
+
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View dialogoView = inflater.inflate(R.layout.consultarusuario, null);
+        dialogBuilder.setView(dialogoView);
+
+        dialogBuilder.setCancelable(false).setPositiveButton("REGISTRAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Select.php"
+                        ).body();
+
+                        System.out.println("Response was: " + response);
+
+                    }
+                }).start();
+
+                Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
+            }
+        }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+    }
+
+    protected void Actualizar(){
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
+
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View dialogoView = inflater.inflate(R.layout.registrarusuario, null);
+
+        Titulo = dialogoView.findViewById(R.id.Titulo);
+        Titulo.setText("ACTUALIZAR USUARIO");
+
+        IdUsuario = dialogoView.findViewById(R.id.IdUsuario);
+        IdUsuario.setVisibility(View.VISIBLE);
+
+        dialogBuilder.setView(dialogoView);
+
+        spinner = dialogoView.findViewById(R.id.spinner);
+
+        final ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this.getContext(), R.array.combo, android.R.layout.simple_spinner_item);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(parent.getContext(),"Seleccionado"+parent.getItemAtPosition(position).toString(),Toast.LENGTH_LONG).show();
+
+                Rol=position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinner.setAdapter(adapter);
+
+        nombre = dialogoView.findViewById(R.id.Nombre);
+        apellido = dialogoView.findViewById(R.id.Apellido);
+        id = dialogoView.findViewById(R.id.Id);
+        telefono = dialogoView.findViewById(R.id.Telefono);
+        email = dialogoView.findViewById(R.id.email);
+        contrasena = dialogoView.findViewById(R.id.Contrasena);
+        IdUsuario = dialogoView.findViewById(R.id.IdUsuario);
+
+        dialogBuilder.setCancelable(false).setPositiveButton("Actualizar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Update.php?nombre="+nombre.getText().toString()
+                                +"&apellido="+apellido.getText().toString()
+                                +"&id="+id.getText().toString()
+                                +"&telefono="+telefono.getText().toString()
+                                +"&email="+email.getText().toString()
+                                +"&contrasena="+contrasena.getText().toString()
+                                +"&idrol="+Rol
+                                +"&IdUsuario="+IdUsuario.getText().toString()
+                        ).body();
+
+                        System.out.println("Response was: " + response);
+
+                    }
+                }).start();
+
+                //Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
+            }
+        }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+    }
+
+    protected void Eliminar(){
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
+
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View dialogoView = inflater.inflate(R.layout.eliminarusuario, null);
+        dialogBuilder.setView(dialogoView);
+
+        IdUsuario = dialogoView.findViewById(R.id.IdUsuario);
+
+        dialogBuilder.setCancelable(false).setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Eliminar.php?IdUsuario="+IdUsuario.getText().toString()).body();
+                        System.out.println("Response was: " + response);
+
+                    }
+                }).start();
+
+                //Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
+
+            }
+        }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

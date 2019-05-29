@@ -41,7 +41,7 @@ public class ControlFragment extends Fragment {
     private ImageView Bombillo, Puerta, Ventana;
     private GifImageView Ventilador;
     private Switch Switch_Bom, Switch_Ventilador, Switch_Puerta, Switch_Ventana;
-    static String Ip="192.168.0.2:800";
+    static String Ip="192.168.0.4:800";
     private int Idcomp;
     private int Idestados;
     private int Idcomp1;
@@ -50,6 +50,9 @@ public class ControlFragment extends Fragment {
     private int Idestados2;
     private int Idcomp3;
     private int Idestados3;
+
+
+
     View view;
     String response, actualizar_B, actualizar_Vd, actualizar_P, actualizar_Vent;
 
