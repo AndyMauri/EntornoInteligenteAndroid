@@ -6,5 +6,6 @@
     <ignoreAction name="Java/Declaration/Create Test" />
     <ignoreAction name="Android/Create onClick event handler" />
     <ignoreAction name="Java/Refactorings/Introduce local variable" />
+    <ignoreAction name="Java/Concurrency/Convert to ThreadLocal" />
   </component>
 </application>
