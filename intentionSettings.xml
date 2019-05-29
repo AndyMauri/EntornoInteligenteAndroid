@@ -7,5 +7,6 @@
     <ignoreAction name="Android/Create onClick event handler" />
     <ignoreAction name="Java/Refactorings/Introduce local variable" />
     <ignoreAction name="Java/Concurrency/Convert to ThreadLocal" />
+    <ignoreAction name="Java/Imports/Add On Demand Static Import" />
   </component>
 </application>
