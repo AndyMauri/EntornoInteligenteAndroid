@@ -45,10 +45,9 @@ public class UsuarioFragment extends Fragment {
     private ImageView Insertar, Consultar, Actualizar, Eliminar;
     EditText nombre, apellido, id, telefono, email, contrasena, IdUsuario;
     TextView Titulo;
-    int Rol, i;
-    boolean resp=false;
+    int Rol;
     JSONArray Roles;
-    ListView listId;
+    ListView ListId, ListNombre, ListApellido, ListTelefono, ListEmail, ListContrasena, ListIdRol;
     ArrayList<String> arrayListId, arrayListNombre, arrayListApellido, arrayListTelefono, arrayListEmail, arrayListContrasena, arrayListIdRol;
     ArrayAdapter adapterId, adapterNombre, adapterApellido, adapterTelefono, adapterEmail, adapterContrasena, adapterIdRol;
     Spinner spinner;
@@ -62,37 +61,37 @@ public class UsuarioFragment extends Fragment {
 
     public void listadapterId(){
         adapterId = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListId);
-        listId.setAdapter(adapterId);
+        ListId.setAdapter(adapterId);
     }
 
     public void listadapterNombre(){
         adapterNombre = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListNombre);
-        listId.setAdapter(adapterNombre);
+        ListNombre.setAdapter(adapterNombre);
     }
 
     public void listadapterApellido(){
         adapterApellido = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListApellido);
-        listId.setAdapter(adapterApellido);
+        ListApellido.setAdapter(adapterApellido);
     }
 
     public void listadapterTelefono(){
         adapterTelefono = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListTelefono);
-        listId.setAdapter(adapterTelefono);
+        ListTelefono.setAdapter(adapterTelefono);
     }
 
     public void listadapterEmail(){
         adapterEmail = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListEmail);
-        listId.setAdapter(adapterEmail);
+        ListEmail.setAdapter(adapterEmail);
     }
 
     public void listadapterContrasena(){
         adapterContrasena= new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListContrasena);
-        listId.setAdapter(adapterContrasena);
+        ListContrasena.setAdapter(adapterContrasena);
     }
 
     public void listadapterIdRol(){
         adapterIdRol = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListIdRol);
-        listId.setAdapter(adapterIdRol);
+        ListIdRol.setAdapter(adapterIdRol);
     }
 
 
@@ -147,6 +146,43 @@ public class UsuarioFragment extends Fragment {
 
             }
         }).start();*/
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Select.php").body();
+                System.out.println("Response was: " + response);
+
+                try {
+                    final JSONArray obj = new JSONArray(response);
+
+                    arrayListId =new ArrayList<>();
+                    arrayListNombre =new ArrayList<>();
+                    arrayListApellido =new ArrayList<>();
+                    arrayListTelefono =new ArrayList<>();
+                    arrayListContrasena =new ArrayList<>();
+                    arrayListEmail =new ArrayList<>();
+                    arrayListIdRol =new ArrayList<>();
+
+                    for (int i = 0; i < obj.length(); i++) {
+                        arrayListId.add(obj.getJSONArray(i).getString(0));
+                        arrayListNombre.add(obj.getJSONArray(i).getString(1));
+                        arrayListApellido.add(obj.getJSONArray(i).getString(2));
+                        arrayListTelefono.add(obj.getJSONArray(i).getString(3));
+                        arrayListContrasena.add(obj.getJSONArray(i).getString(4));
+                        arrayListEmail.add(obj.getJSONArray(i).getString(5));
+                        arrayListIdRol.add(obj.getJSONArray(i).getString(6));
+                        System.out.println("Response was: " + arrayListId+" --- "+arrayListNombre+" --- "+arrayListApellido+" --- "+ arrayListTelefono+" --- "+arrayListContrasena+" --- "+arrayListEmail+" --- "+arrayListIdRol);
+                    }
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
         Insertar = view.findViewById(R.id.Insertar);
         Insertar.setOnClickListener(new View.OnClickListener() {
@@ -264,166 +300,13 @@ public class UsuarioFragment extends Fragment {
         View dialogoView = inflater.inflate(R.layout.consultarusuario, null);
         dialogBuilder.setView(dialogoView);
 
-        listId = dialogoView.findViewById(R.id.listId);
-
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-
-                response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Select.php").body();
-                System.out.println("Response was: " + response);
-
-                try {
-                    final JSONArray obj = new JSONArray(response);
-
-                    arrayListId =new ArrayList<>();
-
-                    for (i = 0; i < obj.length(); i++) {
-                        arrayListId.add(obj.getJSONArray(i).getString(0));
-                        arrayListNombre.add(obj.getJSONArray(i).getString(1));
-                        arrayListApellido.add(obj.getJSONArray(i).getString(2));
-                        arrayListTelefono.add(obj.getJSONArray(i).getString(3));
-                        arrayListContrasena.add(obj.getJSONArray(i).getString(4));
-                        arrayListEmail.add(obj.getJSONArray(i).getString(5));
-                        arrayListIdRol.add(obj.getJSONArray(i).getString(6));
-                        System.out.println("Response was: " + arrayListId+" --- "+arrayListNombre+" --- "+arrayListApellido+" --- "+ arrayListTelefono+" --- "+arrayListContrasena+" --- "+arrayListEmail+" --- "+arrayListIdRol);
-                    }
-
-
-                    new Thread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            listadapterId();
-
-                            try {
-                                Thread.sleep(500);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-                            if ( i == obj.length()) {
-                                Thread.interrupted();
-                                resp = true;
-                            }
-                        }
-                    }).start();
-
-                    new Thread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            listadapterNombre();
-                            try {
-                                Thread.sleep(600);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-                            if (resp == true) {
-                                Thread.interrupted();
-                                resp = true;
-                            }
-
-                        }
-                    }).start();
-
-                    new Thread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            listadapterApellido();
-                            try {
-                                Thread.sleep(700);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-                            if (resp == true) {
-                                Thread.interrupted();
-                                resp = true;
-                            }
-
-                        }
-                    }).start();
-
-                    new Thread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            listadapterTelefono();
-                            try {
-                                Thread.sleep(800);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-                            if (resp == true) {
-                                Thread.interrupted();
-                                resp = true;
-                            }
-                        }
-                    }).start();
-
-                    new Thread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            listadapterEmail();
-                            try {
-                                Thread.sleep(900);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-                            if (resp == true) {
-                                Thread.interrupted();
-                                resp = true;
-                            }
-                        }
-                    }).start();
-
-                    new Thread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            listadapterContrasena();
-                            try {
-                                Thread.sleep(950);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-                            if (resp == true) {
-                                Thread.interrupted();
-                                resp = true;
-                            }
-
-                        }
-                    }).start();
-
-                    new Thread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            listadapterIdRol();
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }).start();
-
-
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
+        ListId = dialogoView.findViewById(R.id.listId);
+        ListNombre = dialogoView.findViewById(R.id.listNombre);
+        ListApellido = dialogoView.findViewById(R.id.listApellido);
+        ListTelefono = dialogoView.findViewById(R.id.listTelefono);
+        ListEmail = dialogoView.findViewById(R.id.listEmail);
+        ListContrasena = dialogoView.findViewById(R.id.listContrasena);
+        ListIdRol = dialogoView.findViewById(R.id.listIdRol);
 
         /*new Thread(new Runnable() {
 
@@ -434,6 +317,14 @@ public class UsuarioFragment extends Fragment {
 
             }
         }).start();*/
+
+        listadapterId();
+        listadapterNombre();
+        listadapterApellido();
+        listadapterTelefono();
+        listadapterEmail();
+        listadapterContrasena();
+        listadapterIdRol();
 
 
         dialogBuilder.setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {

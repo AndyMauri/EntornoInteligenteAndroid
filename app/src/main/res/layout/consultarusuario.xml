@@ -52,7 +52,7 @@
                             android:layout_column="1"
                             android:background="#c0c0c0"
                             android:padding="10dp"
-                            android:text="Apellido                            " />
+                            android:text="Apellido" />
 
                         <TextView
                             android:id="@+id/ColumTelef"
@@ -61,7 +61,7 @@
                             android:layout_column="1"
                             android:background="#c0c0c0"
                             android:padding="10dp"
-                            android:text="Telefono                         " />
+                            android:text="Telefono" />
 
                         <TextView
                             android:id="@+id/ColumEmail"
@@ -70,7 +70,7 @@
                             android:layout_column="1"
                             android:background="#c0c0c0"
                             android:padding="10dp"
-                            android:text="@string/app_name" />
+                            android:text="Email" />
 
                         <TextView
                             android:id="@+id/ColumContras"
@@ -79,7 +79,7 @@
                             android:layout_column="1"
                             android:background="#c0c0c0"
                             android:padding="10dp"
-                            android:text="@string/app_name" />
+                            android:text="Contraseña" />
 
                         <TextView
                             android:id="@+id/ColumRol"
@@ -87,10 +87,10 @@
                             android:layout_height="wrap_content"
                             android:layout_column="1"
                             android:padding="10dp"
-                            android:text="@string/app_name"
+                            android:text="IdRol"
                             android:background="#c0c0c0" />
 
-
+                    </TableRow>
 
                     <TableRow android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
@@ -131,7 +131,7 @@
 
                     </TableRow>
 
-                </TableRow>
+
 
                 </LinearLayout>
 
