@@ -8,5 +8,6 @@
     <ignoreAction name="Java/Refactorings/Introduce local variable" />
     <ignoreAction name="Java/Concurrency/Convert to ThreadLocal" />
     <ignoreAction name="Java/Imports/Add On Demand Static Import" />
+    <ignoreAction name="Java/Declaration/Unimplement Interface/Class" />
   </component>
 </application>
