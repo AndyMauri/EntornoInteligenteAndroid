@@ -41,7 +41,7 @@ public class ControlFragment extends Fragment {
     private ImageView Bombillo, Puerta, Ventana;
     private GifImageView Ventilador;
     private Switch Switch_Bom, Switch_Ventilador, Switch_Puerta, Switch_Ventana;
-    static String Ip="192.168.0.5:800";
+    static String Ip="192.168.0.27";
     private int Idcomp;
     private int Idestados;
     private int Idcomp1;
@@ -271,50 +271,6 @@ public class ControlFragment extends Fragment {
         Ventana.setImageResource(R.drawable.ventana_cerrada);
 
         Switch_Ventana= view.findViewById(R.id.Switch_Ventana);
-        if (Idestados3==3){
-            Switch_Ventana.setChecked(true);
-            Ventana.setImageResource(R.drawable.ventana_abierta);
-        }
-        else{
-            Switch_Ventana.setChecked(false);
-            Ventana.setImageResource(R.drawable.ventana_cerrada);
-        }
-        Switch_Ventana.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        if (Switch_Ventana.isChecked()){
-                            Ventana.setImageResource(R.drawable.ventana_abierta);
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp3+"&Idestado=3").body();
-                                    System.out.println("Response was: " + response);
-                                }
-                            }).start();
-                        }
-                        else {
-                            Ventana.setImageResource(R.drawable.ventana_cerrada);
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp3+"&Idestado=2").body();
-                                    System.out.println("Response was: " + response);
-                                }
-                            }).start();
-                        }
-                    }
-                }.run();
-            }
-        });
-
-        Ventana= view.findViewById(R.id.camara);
-        Ventana.setImageResource(R.drawable.ventana_cerrada);
-
-        Switch_Ventana= view.findViewById(R.id.Switch_Camara);
         if (Idestados3==3){
             Switch_Ventana.setChecked(true);
             Ventana.setImageResource(R.drawable.ventana_abierta);
