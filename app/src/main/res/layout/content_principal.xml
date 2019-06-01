@@ -19,33 +19,4 @@
         tools:layout_editor_absoluteY="26dp" />
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="10">
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:weightSum="10">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="600px"
-                    android:layout_weight="10"
-                    android:layout_gravity="center" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
 </android.support.constraint.ConstraintLayout>
