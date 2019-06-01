@@ -9,7 +9,6 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Import" />
         <item
-            android:visible="true"
             android:id="@+id/Usuario"
             android:icon="@drawable/settings"
             android:title="Usuarios" />
