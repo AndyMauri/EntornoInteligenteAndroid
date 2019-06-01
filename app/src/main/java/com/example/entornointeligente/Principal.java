@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import java.util.zip.Inflater;
@@ -22,7 +21,7 @@ public class Principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ControlFragment.OnFragmentInteractionListener,
         ComponentesFragment.OnFragmentInteractionListener, Fragment_Informacion.OnFragmentInteractionListener,
         UsuarioFragment.OnFragmentInteractionListener{
-    NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +29,24 @@ public class Principal extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Bundle extras = getIntent().getExtras();
+        String nombre = extras.getString("nombre");
+        String correo = extras.getString("correo");
+        //TextView Nombre = findViewById(R.id.nombre);
+        //Nombre.setText(nombre);
+        //TextView Correo = findViewById(R.id.correo);
+        //Correo.setText(correo);
+        String n = getString(R.string.nav_header_title);
+        n.indexOf(nombre);
 
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -38,48 +54,13 @@ public class Principal extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-         navigationView = (NavigationView) findViewById(R.id.nav_view);
-
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        System.out.println("aaaa");
-                        TextView Nombre = findViewById(R.id.nombre1);
-                        Nombre.setText(LoginActivity.nombre);
-                        TextView correo = findViewById(R.id.correo1);
-                        correo.setText(LoginActivity.E);
-                        String idRol=LoginActivity.idRol;
-
-                        if(idRol.equals("1")){
-                            navigationView.getMenu().clear();
-                            navigationView.inflateMenu(R.menu.activity_principal_drawer);
-                        }else{
-                            navigationView.getMenu().clear();
-                            navigationView.inflateMenu(R.menu.activity_principal_drawer2);
-                        }
-                    }
-                });
-            }
-        }).start();
-    }
 
     @Override
     public void onBackPressed() {

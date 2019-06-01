@@ -20,6 +20,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="Logaut">Cerrar Sesión</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="informacion_De_que_trata">Nuestro proyecto es un prototipo del proyecto Entorno Inteligente y se basa en la domótica, es el conjunto de tecnologías aplicadas al control y la automatización de un ambiente,
