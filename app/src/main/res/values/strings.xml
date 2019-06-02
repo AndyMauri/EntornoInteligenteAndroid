@@ -23,11 +23,10 @@
     <string name="Logaut">Cerrar Sesión</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="informacion_De_que_trata">Nuestro proyecto es un prototipo del proyecto Entorno Inteligente y se basa en la domótica, es el conjunto de tecnologías aplicadas al control y la automatización de un ambiente,
+    <string name="informacion_De_que_trata">Esta app es un control de componentes del Entorno Inteligente y se basa en la domótica, la cual es el conjunto de tecnologías aplicadas al control y la automatización de un ambiente,
         con el fin de buscar ciertos beneficios, tales como el ahorro energético, seguridad, confort y comunicación.</string>
-    <string name="informacion_para_que_sirve">Esta app fue creada con el fin de que sirva de control para manejar los estados de componentes que se encuentran dentro de un ambiente domotico en este caso simulado.
-    Más adelante se implementará funciones como el registro, la consulta, la actualización y la anulación tanto de usuarios como de componentes y también de perfiles.</string>
-    <string name="equipo_desarrollador">Andres Naranjo\n Sonia Cifuentes</string>
+    <string name="informacion_para_que_sirve">Esta app fue creada con el fin de que sirva de control para manejar los estados de componentes que se encuentran dentro de un ambiente domotico en este caso simulado.</string>
+    <string name="equipo_desarrollador">ADSI 168</string>
     <string name="title_activity_login2">Sign in</string>
     <string name="title_activity_lgn">lgn</string>
 
