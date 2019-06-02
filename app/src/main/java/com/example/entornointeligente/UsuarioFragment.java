@@ -3,6 +3,7 @@ package com.example.entornointeligente;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.sql.Array;
 import java.util.ArrayList;
 
 
@@ -94,6 +97,15 @@ public class UsuarioFragment extends Fragment {
         ListIdRol.setAdapter(adapterIdRol);
     }
 
+    public void mensage(){
+
+        if (response!=""){
+            Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
+            response="";
+        }
+
+    }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -147,43 +159,6 @@ public class UsuarioFragment extends Fragment {
             }
         }).start();*/
 
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-
-                response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Select.php").body();
-                System.out.println("Response was: " + response);
-
-                try {
-                    final JSONArray obj = new JSONArray(response);
-
-                    arrayListId =new ArrayList<>();
-                    arrayListNombre =new ArrayList<>();
-                    arrayListApellido =new ArrayList<>();
-                    arrayListTelefono =new ArrayList<>();
-                    arrayListContrasena =new ArrayList<>();
-                    arrayListEmail =new ArrayList<>();
-                    arrayListIdRol =new ArrayList<>();
-
-                    for (int i = 0; i < obj.length(); i++) {
-                        arrayListId.add(obj.getJSONArray(i).getString(0));
-                        arrayListNombre.add(obj.getJSONArray(i).getString(1));
-                        arrayListApellido.add(obj.getJSONArray(i).getString(2));
-                        arrayListTelefono.add(obj.getJSONArray(i).getString(3));
-                        arrayListContrasena.add(obj.getJSONArray(i).getString(4));
-                        arrayListEmail.add(obj.getJSONArray(i).getString(5));
-                        arrayListIdRol.add(obj.getJSONArray(i).getString(6));
-                        System.out.println("Response was: " + arrayListId+" --- "+arrayListNombre+" --- "+arrayListApellido+" --- "+ arrayListTelefono+" --- "+arrayListContrasena+" --- "+arrayListEmail+" --- "+arrayListIdRol);
-                    }
-
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
         Insertar = view.findViewById(R.id.Insertar);
         Insertar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,7 +171,52 @@ public class UsuarioFragment extends Fragment {
         Consultar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Consultar();
+
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Select.php").body();
+                        System.out.println("Response was: " + response);
+
+                        try {
+                            final JSONArray obj = new JSONArray(response);
+
+                            arrayListId =new ArrayList<>();
+                            arrayListNombre =new ArrayList<>();
+                            arrayListApellido =new ArrayList<>();
+                            arrayListTelefono =new ArrayList<>();
+                            arrayListContrasena =new ArrayList<>();
+                            arrayListEmail =new ArrayList<>();
+                            arrayListIdRol =new ArrayList<>();
+
+                            for (int i = 0; i < obj.length(); i++) {
+                                arrayListId.add(obj.getJSONArray(i).getString(i));
+                                arrayListApellido.add(obj.getJSONArray(i).getString(2));
+                                arrayListTelefono.add(obj.getJSONArray(i).getString(3));
+                                arrayListContrasena.add(obj.getJSONArray(i).getString(4));
+                                arrayListEmail.add(obj.getJSONArray(i).getString(5));
+                                arrayListIdRol.add(obj.getJSONArray(i).getString(6));
+                                System.out.println("Response was: " + arrayListId+" --- "+arrayListNombre+" --- "+arrayListApellido+" --- "+ arrayListTelefono+" --- "+arrayListContrasena+" --- "+arrayListEmail+" --- "+arrayListIdRol);
+                            }
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Consultar();
+                                    Toast.makeText(getContext(),"Consulta Exitosa",Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        } catch (JSONException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
+
             }
         });
 
@@ -213,7 +233,6 @@ public class UsuarioFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Eliminar();
-                Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
             }
         });
 
@@ -236,7 +255,10 @@ public class UsuarioFragment extends Fragment {
        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(parent.getContext(),"Seleccionado"+parent.getItemAtPosition(position).toString(),Toast.LENGTH_LONG).show();
+
+                if (position != 0) {
+                    Toast.makeText(parent.getContext(),"Seleccionado"+parent.getItemAtPosition(position).toString(),Toast.LENGTH_LONG).show();
+                }
 
                 Rol=position;
             }
@@ -274,10 +296,16 @@ public class UsuarioFragment extends Fragment {
 
                        System.out.println("Response was: " + response);
 
+                       getActivity().runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               mensage();
+                           }
+                       });
+
                    }
                }).start();
 
-               Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
            }
        }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
            @Override
@@ -401,6 +429,13 @@ public class UsuarioFragment extends Fragment {
 
                         System.out.println("Response was: " + response);
 
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mensage();
+                            }
+                        });
+
                     }
                 }).start();
 
@@ -438,6 +473,13 @@ public class UsuarioFragment extends Fragment {
 
                         response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Eliminar.php?IdUsuario="+IdUsuario.getText().toString()).body();
                         System.out.println("Response was: " + response);
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mensage();
+                            }
+                        });
 
                     }
                 }).start();
