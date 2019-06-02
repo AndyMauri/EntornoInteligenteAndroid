@@ -106,7 +106,12 @@ public class Principal extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.Logaut) {
+
+            Intent logaut = new Intent(this, LoginActivity.class);
+            logaut.putExtra("Logaut", "Sesión finalizada");
+            startActivity(logaut);
+
             return true;
         }
 

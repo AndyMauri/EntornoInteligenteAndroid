@@ -42,16 +42,17 @@ public class UsuarioFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    public static String Ip="192.168.0.27";
+    public static String Ip="192.168.0.5:800";
     private String mParam1;
     private String mParam2, response=null;
     private ImageView Insertar, Consultar, Actualizar, Eliminar;
     EditText nombre, apellido, id, telefono, email, contrasena, IdUsuario;
     TextView Titulo;
     int Rol;
-    JSONArray obj;
-    ListView listViewUsuario;
-    ArrayList<String> arrayListUsuario;
+    JSONArray Roles;
+    ListView ListId, ListNombre, ListApellido, ListTelefono, ListEmail, ListContrasena, ListIdRol;
+    ArrayList<String> arrayListId, arrayListNombre, arrayListApellido, arrayListTelefono, arrayListEmail, arrayListContrasena, arrayListIdRol;
+    ArrayAdapter adapterId, adapterNombre, adapterApellido, adapterTelefono, adapterEmail, adapterContrasena, adapterIdRol;
     Spinner spinner;
     View view;
 
@@ -61,12 +62,50 @@ public class UsuarioFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public class ListAdapter extends ArrayAdapter<String>{
-
-        public ListAdapter(Context context, int resource, String[] items_List) {
-            super(context, resource, items_List);
-        }
+    public void listadapterId(){
+        adapterId = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListId);
+        ListId.setAdapter(adapterId);
     }
+
+    public void listadapterNombre(){
+        adapterNombre = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListNombre);
+        ListNombre.setAdapter(adapterNombre);
+    }
+
+    public void listadapterApellido(){
+        adapterApellido = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListApellido);
+        ListApellido.setAdapter(adapterApellido);
+    }
+
+    public void listadapterTelefono(){
+        adapterTelefono = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListTelefono);
+        ListTelefono.setAdapter(adapterTelefono);
+    }
+
+    public void listadapterEmail(){
+        adapterEmail = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListEmail);
+        ListEmail.setAdapter(adapterEmail);
+    }
+
+    public void listadapterContrasena(){
+        adapterContrasena= new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListContrasena);
+        ListContrasena.setAdapter(adapterContrasena);
+    }
+
+    public void listadapterIdRol(){
+        adapterIdRol = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1, arrayListIdRol);
+        ListIdRol.setAdapter(adapterIdRol);
+    }
+
+    public void mensage(){
+
+        if (response!=""){
+            Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
+            response="";
+        }
+
+    }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -132,7 +171,52 @@ public class UsuarioFragment extends Fragment {
         Consultar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Consultar();
+
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Select.php").body();
+                        System.out.println("Response was: " + response);
+
+                        try {
+                            final JSONArray obj = new JSONArray(response);
+
+                            arrayListId =new ArrayList<>();
+                            arrayListNombre =new ArrayList<>();
+                            arrayListApellido =new ArrayList<>();
+                            arrayListTelefono =new ArrayList<>();
+                            arrayListContrasena =new ArrayList<>();
+                            arrayListEmail =new ArrayList<>();
+                            arrayListIdRol =new ArrayList<>();
+
+                            for (int i = 0; i < obj.length(); i++) {
+                                arrayListId.add(obj.getJSONArray(i).getString(i));
+                                arrayListApellido.add(obj.getJSONArray(i).getString(2));
+                                arrayListTelefono.add(obj.getJSONArray(i).getString(3));
+                                arrayListContrasena.add(obj.getJSONArray(i).getString(4));
+                                arrayListEmail.add(obj.getJSONArray(i).getString(5));
+                                arrayListIdRol.add(obj.getJSONArray(i).getString(6));
+                                System.out.println("Response was: " + arrayListId+" --- "+arrayListNombre+" --- "+arrayListApellido+" --- "+ arrayListTelefono+" --- "+arrayListContrasena+" --- "+arrayListEmail+" --- "+arrayListIdRol);
+                            }
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Consultar();
+                                    Toast.makeText(getContext(),"Consulta Exitosa",Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        } catch (JSONException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
+
             }
         });
 
@@ -149,7 +233,6 @@ public class UsuarioFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Eliminar();
-                Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
             }
         });
 
@@ -213,10 +296,16 @@ public class UsuarioFragment extends Fragment {
 
                        System.out.println("Response was: " + response);
 
+                       getActivity().runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               mensage();
+                           }
+                       });
+
                    }
                }).start();
 
-               Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
            }
        }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
            @Override
@@ -239,42 +328,34 @@ public class UsuarioFragment extends Fragment {
         View dialogoView = inflater.inflate(R.layout.consultarusuario, null);
         dialogBuilder.setView(dialogoView);
 
-        //listViewUsuario = dialogoView.findViewById(R.id.InfoUsuario);
-        //ArrayAdapter<String> adapter = ArrayAdapter.createFromResource(getContext(), android.R.layout.simple_list_item_1, arrayListUsuario);
+        ListId = dialogoView.findViewById(R.id.listId);
+        ListNombre = dialogoView.findViewById(R.id.listNombre);
+        ListApellido = dialogoView.findViewById(R.id.listApellido);
+        ListTelefono = dialogoView.findViewById(R.id.listTelefono);
+        ListEmail = dialogoView.findViewById(R.id.listEmail);
+        ListContrasena = dialogoView.findViewById(R.id.listContrasena);
+        ListIdRol = dialogoView.findViewById(R.id.listIdRol);
 
-        dialogBuilder.setCancelable(false).setPositiveButton("REGISTRAR", new DialogInterface.OnClickListener() {
+        /*new Thread(new Runnable() {
+
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                new Thread(new Runnable() {
+            public void run() {
 
-                    @Override
-                    public void run() {
 
-                        response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Select.php").body();
-                        System.out.println("Response was: " + response);
 
-                        try {
-                            obj = new JSONArray(response);
-
-                            if (obj == null) {
-                                arrayListUsuario = new ArrayList<>();
-
-                                for (int i = 0; i < obj.length(); i++) {
-
-                                }
-
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }).start();
-
-                Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
             }
-        }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+        }).start();*/
+
+        listadapterId();
+        listadapterNombre();
+        listadapterApellido();
+        listadapterTelefono();
+        listadapterEmail();
+        listadapterContrasena();
+        listadapterIdRol();
+
+
+        dialogBuilder.setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -348,6 +429,13 @@ public class UsuarioFragment extends Fragment {
 
                         System.out.println("Response was: " + response);
 
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mensage();
+                            }
+                        });
+
                     }
                 }).start();
 
@@ -385,6 +473,13 @@ public class UsuarioFragment extends Fragment {
 
                         response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Eliminar.php?IdUsuario="+IdUsuario.getText().toString()).body();
                         System.out.println("Response was: " + response);
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mensage();
+                            }
+                        });
 
                     }
                 }).start();
