@@ -42,7 +42,6 @@ public class UsuarioFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    public static String Ip="192.168.0.5:800";
     private String mParam1;
     private String mParam2, response=null;
     private ImageView Insertar, Consultar, Actualizar, Eliminar;
@@ -139,26 +138,6 @@ public class UsuarioFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_usuario, container, false);
 
-        /*new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-
-                response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Select_Rol.php").body();
-
-                System.out.println("Response was: " + response);
-
-                try {
-                    Roles = new JSONArray(response);
-
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();*/
-
         Insertar = view.findViewById(R.id.Insertar);
         Insertar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,7 +156,7 @@ public class UsuarioFragment extends Fragment {
                     @Override
                     public void run() {
 
-                        response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Select.php").body();
+                        response = HttpRequest.get("http://" +Staticas.IP+ "/Servicio_Proyect/Servicio_usuario/Usuario_Select.php").body();
                         System.out.println("Response was: " + response);
 
                         try {
@@ -192,7 +171,8 @@ public class UsuarioFragment extends Fragment {
                             arrayListIdRol =new ArrayList<>();
 
                             for (int i = 0; i < obj.length(); i++) {
-                                arrayListId.add(obj.getJSONArray(i).getString(i));
+                                arrayListId.add(obj.getJSONArray(i).getString(0));
+                                arrayListNombre.add(obj.getJSONArray(i).getString(1));
                                 arrayListApellido.add(obj.getJSONArray(i).getString(2));
                                 arrayListTelefono.add(obj.getJSONArray(i).getString(3));
                                 arrayListContrasena.add(obj.getJSONArray(i).getString(4));
@@ -285,7 +265,7 @@ public class UsuarioFragment extends Fragment {
                    @Override
                    public void run() {
 
-                       response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Insert.php?nombre="+nombre.getText().toString()
+                       response = HttpRequest.get("http://" +Staticas.IP+ "/Servicio_Proyect/Servicio_usuario/Usuario_Insert.php?nombre="+nombre.getText().toString()
                                +"&apellido="+apellido.getText().toString()
                                +"&id="+id.getText().toString()
                                +"&telefono="+telefono.getText().toString()
@@ -417,7 +397,7 @@ public class UsuarioFragment extends Fragment {
                     @Override
                     public void run() {
 
-                        response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Update.php?nombre="+nombre.getText().toString()
+                        response = HttpRequest.get("http://" +Staticas.IP+ "/Servicio_Proyect/Servicio_usuario/Usuario_Update.php?nombre="+nombre.getText().toString()
                                 +"&apellido="+apellido.getText().toString()
                                 +"&id="+id.getText().toString()
                                 +"&telefono="+telefono.getText().toString()
@@ -471,7 +451,7 @@ public class UsuarioFragment extends Fragment {
                     @Override
                     public void run() {
 
-                        response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Eliminar.php?IdUsuario="+IdUsuario.getText().toString()).body();
+                        response = HttpRequest.get("http://" +Staticas.IP+ "/Servicio_Proyect/Servicio_usuario/Usuario_Eliminar.php?IdUsuario="+IdUsuario.getText().toString()).body();
                         System.out.println("Response was: " + response);
 
                         getActivity().runOnUiThread(new Runnable() {

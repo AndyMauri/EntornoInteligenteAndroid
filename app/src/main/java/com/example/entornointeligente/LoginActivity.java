@@ -57,15 +57,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
-    /*private static final ThreadLocal<String[]> DUMMY_CREDENTIALS = new ThreadLocal<String[]>() {
-        @Override
-        protected String[] initialValue() {
-            return new String[]{
-                    E + ":" + C, "foo@example.com:hello"
-            };
-        }
-    };*/
-    public static String Ip="192.168.0.5:800", E, C, nombre, idRol;
+
+    public static String E, C, nombre, idRol;
 
     private static final ThreadLocal<String[]> DUMMY_CREDENTIALS = new ThreadLocal<String[]>() {
         @Override
@@ -121,7 +114,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     public void run() {
 
 
-                        response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_usuario/Select_Login.php?usuario=" + mEmailView.getText().toString() + "&contrasena=" + mPasswordView.getText().toString()).body();
+                        response = HttpRequest.get("http://" + Staticas.IP + "/Servicio_Proyect/Servicio_usuario/Select_Login.php?usuario=" + mEmailView.getText().toString() + "&contrasena=" + mPasswordView.getText().toString()).body();
                         System.out.println("Response was: " + response);
 
                         try {
@@ -133,14 +126,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                     @Override
                                     public void run() {
                                         try {
+
                                             E = obj.getJSONArray(0).getString(0);
                                             C = obj.getJSONArray(0).getString(1);
                                             nombre = obj.getJSONArray(0).getString(2);
                                             idRol = obj.getJSONArray(0).getString(3);
                                             System.out.println("Response was: " + E + " ... " + C);
-                                            Intent trans = new Intent(getApplicationContext(), Principal.class);
-                                            bienvenido.start();
-                                            startActivity(trans);
+
+                                            if (attemptLogin2(E,C) == false) {
+                                                return;
+                                            }else {
+                                                Intent trans = new Intent(getApplicationContext(), Principal.class);
+                                                bienvenido.start();
+                                                startActivity(trans);
+                                            }
+
+
                                         } catch (JSONException e) {
                                             // TODO Auto-generated catch block
                                             e.printStackTrace();
@@ -177,13 +178,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             }
         });
-
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
-        View vista = inflater.inflate(R.layout.nav_header_principal, null);
-        final TextView nom = vista.findViewById(R.id.nombre1);
-        final TextView correo = vista.findViewById(R.id.correo1);
-        nom.setText(nombre);
-        correo.setText(E);
     }
 
     private void populateAutoComplete() {
@@ -257,6 +251,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mPasswordView;
             cancel = true;
             puedeSeguir = false;
+        }else if (!isPasswordValid(password)) {
+            mPasswordView.setError("La contraseña es invalida");
+            focusView = mPasswordView;
+            cancel = true;
+            puedeSeguir = false;
         }
 
         // Check for a valid email address.
@@ -277,6 +276,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // form field with an error.
             focusView.requestFocus();
         }
+
         return puedeSeguir;
     }
 
@@ -292,15 +292,43 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return password.length() >= 4;
     }
 
-    /*private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+    private boolean attemptLogin2(String email1, String password1) {
+        boolean puedeSeguir2 = false;
+
+        // Reset errors.
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
+
+        // Store values at the time of the login attempt.
+        String email2 = email1;
+        String password2 = password1;
+
+        boolean cancel = false;
+        View focusView = null;
+        View focusView2 = null;
+
+        if (email2=="" || password2=="") {
+            mEmailView.setError("El correo o la contraseña es invalido");
+            mPasswordView.setError("El correo o la contraseña es invalido");
+            focusView = mEmailView;
+            focusView2 = mPasswordView;
+            cancel = true;
+            puedeSeguir2 = false;
+        }else if (email2!="" && password2!="") {
+            showProgress(true);
+            puedeSeguir2 = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+            focusView2.requestFocus();
+        }
+
+        return puedeSeguir2;
     }
 
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() >= 4;
-    }*/
 
     /**
      * Shows the progress UI and hides the login form.
