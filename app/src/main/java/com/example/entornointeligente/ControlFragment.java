@@ -6,11 +6,13 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import org.json.JSONArray;
@@ -38,6 +40,7 @@ public class ControlFragment extends Fragment {
     private String mParam2;
 
     //Variables para las vistas
+    private LinearLayout layout;
     private ImageView Bombillo, Puerta, Ventana, Camara, Aire;
     private GifImageView Ventilador;
     private Switch Switch_Bom, Switch_Ventilador, Switch_Puerta, Switch_Ventana, Switch_Camara, Switch_Aire;
@@ -135,6 +138,14 @@ public class ControlFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_control, container, false);
+
+        String idRol=LoginActivity.idRol;
+        layout=view.findViewById(R.id.layautCamara);
+        if(idRol.equals("1")){
+            layout.setVisibility(View.VISIBLE);
+        }else{
+            layout.setVisibility(View.GONE);
+        }
 
 
         Bombillo= view.findViewById(R.id.bombillo);
