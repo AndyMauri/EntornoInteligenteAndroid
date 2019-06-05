@@ -1,2 +1,0 @@
-# EntornoInteligenteAndroid
-ADSI-168
