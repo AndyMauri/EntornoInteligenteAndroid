@@ -221,18 +221,18 @@ public class UsuarioFragment extends Fragment {
 
     protected void Insertar(){
 
-       AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
 
-       LayoutInflater inflater = this.getLayoutInflater();
+        LayoutInflater inflater = this.getLayoutInflater();
 
-       View dialogoView = inflater.inflate(R.layout.registrarusuario, null);
-       dialogBuilder.setView(dialogoView);
+        View dialogoView = inflater.inflate(R.layout.registrarusuario, null);
+        dialogBuilder.setView(dialogoView);
 
-       spinner = dialogoView.findViewById(R.id.spinner);
+        spinner = dialogoView.findViewById(R.id.spinner);
 
-       final ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this.getContext(), R.array.combo, android.R.layout.simple_spinner_item);
+        final ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this.getContext(), R.array.combo, android.R.layout.simple_spinner_item);
 
-       spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -250,52 +250,52 @@ public class UsuarioFragment extends Fragment {
         });
         spinner.setAdapter(adapter);
 
-       nombre = dialogoView.findViewById(R.id.Nombre);
-       apellido = dialogoView.findViewById(R.id.Apellido);
-       id = dialogoView.findViewById(R.id.Id);
-       telefono = dialogoView.findViewById(R.id.Telefono);
-       email = dialogoView.findViewById(R.id.email);
-       contrasena = dialogoView.findViewById(R.id.Contrasena);
+        nombre = dialogoView.findViewById(R.id.Nombre);
+        apellido = dialogoView.findViewById(R.id.Apellido);
+        id = dialogoView.findViewById(R.id.Id);
+        telefono = dialogoView.findViewById(R.id.Telefono);
+        email = dialogoView.findViewById(R.id.email);
+        contrasena = dialogoView.findViewById(R.id.Contrasena);
 
-       dialogBuilder.setCancelable(false).setPositiveButton("REGISTRAR", new DialogInterface.OnClickListener() {
-           @Override
-           public void onClick(DialogInterface dialog, int which) {
-               new Thread(new Runnable() {
+        dialogBuilder.setCancelable(false).setPositiveButton("REGISTRAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                new Thread(new Runnable() {
 
-                   @Override
-                   public void run() {
+                    @Override
+                    public void run() {
 
-                       response = HttpRequest.get("http://" +Staticas.IP+ "/Servicio_Proyect/Servicio_usuario/Usuario_Insert.php?nombre="+nombre.getText().toString()
-                               +"&apellido="+apellido.getText().toString()
-                               +"&id="+id.getText().toString()
-                               +"&telefono="+telefono.getText().toString()
-                               +"&email="+email.getText().toString()
-                               +"&contrasena="+contrasena.getText().toString()
-                               +"&idrol="+Rol
-                       ).body();
+                        response = HttpRequest.get("http://" +Staticas.IP+ "/Servicio_Proyect/Servicio_usuario/Usuario_Insert.php?nombre="+nombre.getText().toString()
+                                +"&apellido="+apellido.getText().toString()
+                                +"&id="+id.getText().toString()
+                                +"&telefono="+telefono.getText().toString()
+                                +"&email="+email.getText().toString()
+                                +"&contrasena="+contrasena.getText().toString()
+                                +"&idrol="+Rol
+                        ).body();
 
-                       System.out.println("Response was: " + response);
+                        System.out.println("Response was: " + response);
 
-                       getActivity().runOnUiThread(new Runnable() {
-                           @Override
-                           public void run() {
-                               mensage();
-                           }
-                       });
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mensage();
+                            }
+                        });
 
-                   }
-               }).start();
+                    }
+                }).start();
 
-           }
-       }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
-           @Override
-           public void onClick(DialogInterface dialog, int which) {
-               dialog.cancel();
-           }
-       });
+            }
+        }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
 
-       AlertDialog alertDialog = dialogBuilder.create();
-       alertDialog.show();
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
     }
 
 

@@ -103,23 +103,23 @@ public class ControlFragment extends Fragment {
                 try {
                     final JSONArray obj = new JSONArray(response);
 
-                        Idcomp= Integer.parseInt(obj.getJSONArray(0).getString(0));
-                        Idestados= Integer.parseInt(obj.getJSONArray(0).getString(1));
+                    Idcomp= Integer.parseInt(obj.getJSONArray(0).getString(0));
+                    Idestados= Integer.parseInt(obj.getJSONArray(0).getString(1));
 
-                        Idcomp1= Integer.parseInt(obj.getJSONArray(1).getString(0));
-                        Idestados1= Integer.parseInt(obj.getJSONArray(1).getString(1));
+                    Idcomp1= Integer.parseInt(obj.getJSONArray(1).getString(0));
+                    Idestados1= Integer.parseInt(obj.getJSONArray(1).getString(1));
 
-                        Idcomp2= Integer.parseInt(obj.getJSONArray(2).getString(0));
-                        Idestados2= Integer.parseInt(obj.getJSONArray(2).getString(1));
+                    Idcomp2= Integer.parseInt(obj.getJSONArray(2).getString(0));
+                    Idestados2= Integer.parseInt(obj.getJSONArray(2).getString(1));
 
-                        Idcomp3= Integer.parseInt(obj.getJSONArray(3).getString(0));
-                        Idestados3= Integer.parseInt(obj.getJSONArray(3).getString(1));
+                    Idcomp3= Integer.parseInt(obj.getJSONArray(3).getString(0));
+                    Idestados3= Integer.parseInt(obj.getJSONArray(3).getString(1));
 
-                        Idcomp4= Integer.parseInt(obj.getJSONArray(4).getString(0));
-                        Idestados4= Integer.parseInt(obj.getJSONArray(4).getString(1));
+                    Idcomp4= Integer.parseInt(obj.getJSONArray(4).getString(0));
+                    Idestados4= Integer.parseInt(obj.getJSONArray(4).getString(1));
 
-                        Idcomp5= Integer.parseInt(obj.getJSONArray(5).getString(0));
-                        Idestados5= Integer.parseInt(obj.getJSONArray(5).getString(1));
+                    Idcomp5= Integer.parseInt(obj.getJSONArray(5).getString(0));
+                    Idestados5= Integer.parseInt(obj.getJSONArray(5).getString(1));
 
                     System.out.println("bombillo..."+Idestados+", Ventilador..."+Idestados1+", Puerta..."+Idestados2+", Ventana..."+Idestados3+", response...");
 
