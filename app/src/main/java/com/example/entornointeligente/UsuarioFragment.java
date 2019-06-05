@@ -42,7 +42,6 @@ public class UsuarioFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    public static String Ip="192.168.0.5:800";
     private String mParam1;
     private String mParam2, response=null;
     private ImageView Insertar, Consultar, Actualizar, Eliminar;
@@ -139,26 +138,6 @@ public class UsuarioFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_usuario, container, false);
 
-        /*new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-
-                response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Select_Rol.php").body();
-
-                System.out.println("Response was: " + response);
-
-                try {
-                    Roles = new JSONArray(response);
-
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();*/
-
         Insertar = view.findViewById(R.id.Insertar);
         Insertar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,7 +156,7 @@ public class UsuarioFragment extends Fragment {
                     @Override
                     public void run() {
 
-                        response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Select.php").body();
+                        response = HttpRequest.get("http://" +Staticas.IP+ "/Servicio_Proyect/Servicio_usuario/Usuario_Select.php").body();
                         System.out.println("Response was: " + response);
 
                         try {
@@ -192,7 +171,8 @@ public class UsuarioFragment extends Fragment {
                             arrayListIdRol =new ArrayList<>();
 
                             for (int i = 0; i < obj.length(); i++) {
-                                arrayListId.add(obj.getJSONArray(i).getString(i));
+                                arrayListId.add(obj.getJSONArray(i).getString(0));
+                                arrayListNombre.add(obj.getJSONArray(i).getString(1));
                                 arrayListApellido.add(obj.getJSONArray(i).getString(2));
                                 arrayListTelefono.add(obj.getJSONArray(i).getString(3));
                                 arrayListContrasena.add(obj.getJSONArray(i).getString(4));
@@ -241,18 +221,18 @@ public class UsuarioFragment extends Fragment {
 
     protected void Insertar(){
 
-       AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
 
-       LayoutInflater inflater = this.getLayoutInflater();
+        LayoutInflater inflater = this.getLayoutInflater();
 
-       View dialogoView = inflater.inflate(R.layout.registrarusuario, null);
-       dialogBuilder.setView(dialogoView);
+        View dialogoView = inflater.inflate(R.layout.registrarusuario, null);
+        dialogBuilder.setView(dialogoView);
 
-       spinner = dialogoView.findViewById(R.id.spinner);
+        spinner = dialogoView.findViewById(R.id.spinner);
 
-       final ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this.getContext(), R.array.combo, android.R.layout.simple_spinner_item);
+        final ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this.getContext(), R.array.combo, android.R.layout.simple_spinner_item);
 
-       spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -270,52 +250,52 @@ public class UsuarioFragment extends Fragment {
         });
         spinner.setAdapter(adapter);
 
-       nombre = dialogoView.findViewById(R.id.Nombre);
-       apellido = dialogoView.findViewById(R.id.Apellido);
-       id = dialogoView.findViewById(R.id.Id);
-       telefono = dialogoView.findViewById(R.id.Telefono);
-       email = dialogoView.findViewById(R.id.email);
-       contrasena = dialogoView.findViewById(R.id.Contrasena);
+        nombre = dialogoView.findViewById(R.id.Nombre);
+        apellido = dialogoView.findViewById(R.id.Apellido);
+        id = dialogoView.findViewById(R.id.Id);
+        telefono = dialogoView.findViewById(R.id.Telefono);
+        email = dialogoView.findViewById(R.id.email);
+        contrasena = dialogoView.findViewById(R.id.Contrasena);
 
-       dialogBuilder.setCancelable(false).setPositiveButton("REGISTRAR", new DialogInterface.OnClickListener() {
-           @Override
-           public void onClick(DialogInterface dialog, int which) {
-               new Thread(new Runnable() {
+        dialogBuilder.setCancelable(false).setPositiveButton("REGISTRAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                new Thread(new Runnable() {
 
-                   @Override
-                   public void run() {
+                    @Override
+                    public void run() {
 
-                       response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Insert.php?nombre="+nombre.getText().toString()
-                               +"&apellido="+apellido.getText().toString()
-                               +"&id="+id.getText().toString()
-                               +"&telefono="+telefono.getText().toString()
-                               +"&email="+email.getText().toString()
-                               +"&contrasena="+contrasena.getText().toString()
-                               +"&idrol="+Rol
-                       ).body();
+                        response = HttpRequest.get("http://" +Staticas.IP+ "/Servicio_Proyect/Servicio_usuario/Usuario_Insert.php?nombre="+nombre.getText().toString()
+                                +"&apellido="+apellido.getText().toString()
+                                +"&id="+id.getText().toString()
+                                +"&telefono="+telefono.getText().toString()
+                                +"&email="+email.getText().toString()
+                                +"&contrasena="+contrasena.getText().toString()
+                                +"&idrol="+Rol
+                        ).body();
 
-                       System.out.println("Response was: " + response);
+                        System.out.println("Response was: " + response);
 
-                       getActivity().runOnUiThread(new Runnable() {
-                           @Override
-                           public void run() {
-                               mensage();
-                           }
-                       });
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mensage();
+                            }
+                        });
 
-                   }
-               }).start();
+                    }
+                }).start();
 
-           }
-       }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
-           @Override
-           public void onClick(DialogInterface dialog, int which) {
-               dialog.cancel();
-           }
-       });
+            }
+        }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
 
-       AlertDialog alertDialog = dialogBuilder.create();
-       alertDialog.show();
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
     }
 
 
@@ -417,7 +397,7 @@ public class UsuarioFragment extends Fragment {
                     @Override
                     public void run() {
 
-                        response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Update.php?nombre="+nombre.getText().toString()
+                        response = HttpRequest.get("http://" +Staticas.IP+ "/Servicio_Proyect/Servicio_usuario/Usuario_Update.php?nombre="+nombre.getText().toString()
                                 +"&apellido="+apellido.getText().toString()
                                 +"&id="+id.getText().toString()
                                 +"&telefono="+telefono.getText().toString()
@@ -471,7 +451,7 @@ public class UsuarioFragment extends Fragment {
                     @Override
                     public void run() {
 
-                        response = HttpRequest.get("http://" +Ip+ "/Servicio_Proyect/Servicio_usuario/Usuario_Eliminar.php?IdUsuario="+IdUsuario.getText().toString()).body();
+                        response = HttpRequest.get("http://" +Staticas.IP+ "/Servicio_Proyect/Servicio_usuario/Usuario_Eliminar.php?IdUsuario="+IdUsuario.getText().toString()).body();
                         System.out.println("Response was: " + response);
 
                         getActivity().runOnUiThread(new Runnable() {

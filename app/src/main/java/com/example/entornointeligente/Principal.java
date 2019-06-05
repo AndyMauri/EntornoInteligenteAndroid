@@ -38,7 +38,7 @@ public class Principal extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);

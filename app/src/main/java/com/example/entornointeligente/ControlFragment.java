@@ -38,10 +38,10 @@ public class ControlFragment extends Fragment {
     private String mParam2;
 
     //Variables para las vistas
-    private ImageView Bombillo, Puerta, Ventana;
+    private ImageView Bombillo, Puerta, Ventana, Camara, Aire;
     private GifImageView Ventilador;
-    private Switch Switch_Bom, Switch_Ventilador, Switch_Puerta, Switch_Ventana;
-    static String Ip="192.168.0.27";
+    private Switch Switch_Bom, Switch_Ventilador, Switch_Puerta, Switch_Ventana, Switch_Camara, Switch_Aire;
+    //static String Ip="192.168.0.5:800";
     private int Idcomp;
     private int Idestados;
     private int Idcomp1;
@@ -50,11 +50,14 @@ public class ControlFragment extends Fragment {
     private int Idestados2;
     private int Idcomp3;
     private int Idestados3;
-
+    private int Idcomp4;
+    private int Idestados4;
+    private int Idcomp5;
+    private int Idestados5;
 
 
     View view;
-    String response, actualizar_B, actualizar_Vd, actualizar_P, actualizar_Vent;
+    String response;
 
     private OnFragmentInteractionListener mListener;
 
@@ -91,7 +94,7 @@ public class ControlFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Select.php").body();
+                response = HttpRequest.get("http://" + Staticas.IP + "/Servicio_Proyect/Servicio_Componente/Servicio_Select.php").body();
                 System.out.println("Response was: " + response);
 
                 try {
@@ -99,14 +102,23 @@ public class ControlFragment extends Fragment {
 
                     Idcomp= Integer.parseInt(obj.getJSONArray(0).getString(0));
                     Idestados= Integer.parseInt(obj.getJSONArray(0).getString(1));
+
                     Idcomp1= Integer.parseInt(obj.getJSONArray(1).getString(0));
                     Idestados1= Integer.parseInt(obj.getJSONArray(1).getString(1));
+
                     Idcomp2= Integer.parseInt(obj.getJSONArray(2).getString(0));
                     Idestados2= Integer.parseInt(obj.getJSONArray(2).getString(1));
+
                     Idcomp3= Integer.parseInt(obj.getJSONArray(3).getString(0));
                     Idestados3= Integer.parseInt(obj.getJSONArray(3).getString(1));
 
-                    System.out.println("bombillo..."+Idestados+", Ventilador..."+Idestados1+", Puerta..."+Idestados2+", Ventana..."+Idestados3);
+                    Idcomp4= Integer.parseInt(obj.getJSONArray(4).getString(0));
+                    Idestados4= Integer.parseInt(obj.getJSONArray(4).getString(1));
+
+                    Idcomp5= Integer.parseInt(obj.getJSONArray(5).getString(0));
+                    Idestados5= Integer.parseInt(obj.getJSONArray(5).getString(1));
+
+                    System.out.println("bombillo..."+Idestados+", Ventilador..."+Idestados1+", Puerta..."+Idestados2+", Ventana..."+Idestados3+", response...");
 
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
@@ -149,7 +161,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp+"&Idestado=1").body();
+                                    String response = HttpRequest.get("http://" + Staticas.IP + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp+"&Idestado=1").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
@@ -159,7 +171,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp+"&Idestado=0").body();
+                                    String response = HttpRequest.get("http://" + Staticas.IP + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp+"&Idestado=0").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
@@ -197,7 +209,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp1+"&Idestado=1").body();
+                                    String response = HttpRequest.get("http://" + Staticas.IP + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp1+"&Idestado=1").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
@@ -208,7 +220,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp1+"&Idestado=0").body();
+                                    String response = HttpRequest.get("http://" + Staticas.IP + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp1+"&Idestado=0").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
@@ -244,7 +256,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp2+"&Idestado=3").body();
+                                    String response = HttpRequest.get("http://" + Staticas.IP + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp2+"&Idestado=3").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
@@ -255,7 +267,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp2+"&Idestado=2").body();
+                                    String response = HttpRequest.get("http://" + Staticas.IP + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp2+"&Idestado=2").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
@@ -291,7 +303,7 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp3+"&Idestado=3").body();
+                                    String response = HttpRequest.get("http://" + Staticas.IP + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp3+"&Idestado=3").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
@@ -301,13 +313,103 @@ public class ControlFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String response = HttpRequest.get("http://" + Ip + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp3+"&Idestado=2").body();
+                                    String response = HttpRequest.get("http://" + Staticas.IP + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp3+"&Idestado=2").body();
                                     System.out.println("Response was: " + response);
                                 }
                             }).start();
                         }
                     }
                 }.run();
+            }
+        });
+
+        Camara= view.findViewById(R.id.camara);
+        Camara.setImageResource(R.drawable.camaraapagada);
+
+        Switch_Camara= view.findViewById(R.id.Switch_Camara);
+        if (Idestados4==1){
+            Switch_Camara.setChecked(true);
+            Camara.setImageResource(R.drawable.camaraencendida);
+        }
+        else{
+            Switch_Camara.setChecked(false);
+            Camara.setImageResource(R.drawable.camaraapagada);
+        }
+        Switch_Camara.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Switch_Camara.isChecked()){
+                            Camara.setImageResource(R.drawable.camaraencendida);
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    String response = HttpRequest.get("http://" + Staticas.IP + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp4+"&Idestado=1").body();
+                                    System.out.println("Response was: " + response);
+                                }
+                            }).start();
+                        }
+                        else {
+                            Camara.setImageResource(R.drawable.camaraapagada);
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    String response = HttpRequest.get("http://" + Staticas.IP + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp4+"&Idestado=0").body();
+                                    System.out.println("Response was: " + response);
+                                }
+                            }).start();
+                        }
+                    }
+                }.run();
+
+            }
+        });
+
+        Aire= view.findViewById(R.id.Aire);
+        Aire.setImageResource(R.drawable.aireapagado);
+
+        Switch_Aire= view.findViewById(R.id.Switch_Aire);
+        if (Idestados5==1){
+            Switch_Aire.setChecked(true);
+            Aire.setImageResource(R.drawable.aireencendido);
+        }
+        else{
+            Switch_Aire.setChecked(false);
+            Aire.setImageResource(R.drawable.aireapagado);
+        }
+        Switch_Aire.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Switch_Aire.isChecked()){
+                            Aire.setImageResource(R.drawable.aireencendido);
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    String response = HttpRequest.get("http://" + Staticas.IP + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp5+"&Idestado=1").body();
+                                    System.out.println("Response was: " + response);
+                                }
+                            }).start();
+                        }
+                        else {
+                            Aire.setImageResource(R.drawable.aireapagado);
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    String response = HttpRequest.get("http://" + Staticas.IP + "/Servicio_Proyect/Servicio_Componente/Servicio_Update.php?Idcomp="+Idcomp5+"&Idestado=0").body();
+                                    System.out.println("Response was: " + response);
+                                }
+                            }).start();
+                        }
+                    }
+                }.run();
+
             }
         });
 

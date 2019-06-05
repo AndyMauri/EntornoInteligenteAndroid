@@ -27,7 +27,7 @@
         con el fin de buscar ciertos beneficios, tales como el ahorro energético, seguridad, confort y comunicación.</string>
     <string name="informacion_para_que_sirve">Esta app fue creada con el fin de que sirva de control para manejar los estados de componentes que se encuentran dentro de un ambiente domotico en este caso simulado.</string>
     <string name="equipo_desarrollador">ADSI 168</string>
-    <string name="title_activity_login2">Sign in</string>
+    <string name="title_activity_login2">Iniciar Sesión</string>
     <string name="title_activity_lgn">lgn</string>
 
     <!-- TODO: Remove or change this placeholder text -->

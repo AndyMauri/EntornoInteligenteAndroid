@@ -7,7 +7,8 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="Import"
+            android:visible="false"/>
         <item
             android:visible="false"
             android:id="@+id/Usuario"
@@ -16,7 +17,8 @@
         <item
             android:id="@+id/componentes"
             android:icon="@drawable/componentes"
-            android:title="Componetes" />
+            android:title="Componetes"
+            android:visible="false"/>
         <item
             android:id="@+id/control"
             android:icon="@drawable/switch1"
@@ -24,7 +26,8 @@
         <item
             android:id="@+id/simulador"
             android:icon="@drawable/presentation"
-            android:title="Simulador" />
+            android:title="Simulador"
+            android:visible="false"/>
     </group>
 
     <item android:title="Información">
